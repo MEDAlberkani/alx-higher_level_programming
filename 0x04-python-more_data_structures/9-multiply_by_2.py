@@ -1,3 +1,3 @@
-[200~#!/usr/bin/python3
-        def multiply_by_2(a_dictionary):
-            return {x: y * 2 for x, y in a_dictionary.items()}
+#!/usr/bin/python3
+def multiply_by_2(a_dictionary):
+    return {key: val * 2 for key, val in a_dictionary.items()}
