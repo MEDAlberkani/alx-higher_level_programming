@@ -1,4 +1,5 @@
-e strict';
+#!/usr/bin/node
+'use strict';
 let x = process.argv[2];
 if (isNaN(x)) {
   console.log('Missing size');
