@@ -1,10 +1,9 @@
 #!/usr/bin/node
-'use strict';
-let x = process.argv[2];
-if (isNaN(x)) {
+
+if (isNaN(process.argv[2])) {
   console.log('Missing size');
 } else {
-  for (let i = 0; i < x; i++) {
-    console.log('X'.repeat(x));
+  for (let i = 0; i < process.argv[2]; i++) {
+    console.log('X'.repeat(process.argv[2]));
   }
 }
