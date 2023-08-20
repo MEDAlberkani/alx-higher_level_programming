@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-prints the State object with the name passed as argument from a database
+list all State objects that contain the letter a from a database
 """
 
 import sqlalchemy
@@ -16,9 +16,8 @@ if __name__ == "__main__":
     Base.metadata.create_all(eng)
     Session = sessionmaker(bind=eng)
     session = Session()
-    state = session.query(State).filter_by(name=argv[4]).first()
-    if state is not None:
-        print(str(state.id))
-    else:
-        print("Not found")
+    s = '%a%'
+    states = session.query(State).filter(State.name.like(s)).order_by(State.id)
+    for state in states:
+        print("{}: {}".format(state.id, state.name))
     session.close()
