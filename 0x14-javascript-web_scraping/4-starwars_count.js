@@ -1,32 +1,28 @@
 #!/usr/bin/node
-/**
-  prints number of movies where the character 'Wedge Antilles' is present.
-  usage: ./4-starwars_count.js <API URL>
-  */
-const myArgs = process.argv.slice(2);
-const request = require('request');
-const characters_ = [];
-request(myArgs[0], function (error, response, body) {
-  if (error) {
-    console.log(error);
-  }
-  if (!error) {
-    let i = 0;
-    const json_ = JSON.parse(body);
 
-    for (i = 0; i < 7; i++) {
-      characters_.push(json_.results[i].characters);
-    }
+/*
+This script retrieves JSON data from an external API and counts the number of movies in which a character with ID ending in "/18/" appears.
+*/
+
+// Import the 'request' library, which allows us to make HTTP requests in Node.js
+const request = require('request');
+
+// Send an HTTP GET request to the URL passed in as the third argument to the script
+request(process.argv[2], function (error, response, body) {
+  // Check if there was no error in the request
+  if (!error) {
+    // Parse the response body as JSON
+    const results = JSON.parse(body).results;
+
+    // Use the 'reduce' method to count the number of movies in which a character with ID ending in '/18/' appears
+    const numMovies = results.reduce((count, movie) => {
+      // Check if there is any character in the 'movie' array whose ID ends with '/18/'
+      return movie.characters.find((character) => character.endsWith('/18/'))
+        ? count + 1 // If there is, increment the 'count'
+        : count; // Otherwise, return the current 'count'
+    }, 0);
+
+    // Print the number of movies to the console
+    console.log(numMovies);
   }
-  let counter = 0;
-  characters_.forEach(function each (item) {
-    if (Array.isArray(item)) {
-      item.forEach(each);
-    } else {
-      if (item === 'https://swapi-api.hbtn.io/api/people/18/') {
-        counter++;
-      }
-    }
-  });
-  console.log(counter);
 });
